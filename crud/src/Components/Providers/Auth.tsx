@@ -8,11 +8,25 @@ import React, {
   useState,
 } from "react";
 
+const PageTypes = {
+  REGISTER: {
+    buttonType: null,
+  },
+  UPDATE: {
+    buttonType: "UPDATE",
+  },
+  DELETE: {
+    buttonType: "DELETE",
+  },
+  LIST: {
+    buttonType: "LIST",
+  },
+};
+type PageType = keyof typeof PageTypes;
+
 interface AuthContextData {
-  pageType: string | null;
-  setPageType: Dispatch<
-    SetStateAction<"UPDATE" | "DELETE" | "LIST" | "REGISTER" | null>
-  >;
+  pageType: PageType | null;
+  setPageType: Dispatch<SetStateAction<PageType | null>>;
   cardList: never[];
   setCardList: Dispatch<SetStateAction<never[]>>;
   getCardList: () => Promise<void>;
@@ -22,21 +36,6 @@ interface AuthContextData {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthContextProvider = ({ children }: PropsWithChildren<{}>) => {
-  const PageTypes = {
-    REGISTER: {
-      buttonType: null,
-    },
-    UPDATE: {
-      buttonType: "UPDATE",
-    },
-    DELETE: {
-      buttonType: "DELETE",
-    },
-    LIST: {
-      buttonType: "LIST",
-    },
-  };
-  type PageType = keyof typeof PageTypes;
   const [pageType, setPageType] = useState<PageType | null>(null);
   const [cardList, setCardList] = useState([]);
 

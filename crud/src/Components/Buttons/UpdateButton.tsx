@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { EditingSection } from "../Sections/EditingSection";
+import { UpdatingSection } from "../Sections/UpdatingSection";
 import { Popover } from "@headlessui/react";
 
-interface EditButtonProps {
+interface UpdateButtonProps {
   id: number;
   user: string;
   date: Date;
@@ -10,14 +10,14 @@ interface EditButtonProps {
   password: string;
 }
 
-export function EditButton(props: EditButtonProps) {
+export function UpdateButton(props: UpdateButtonProps) {
   return (
     <Popover className="flex justify-end">
       <Popover.Button className="rounded-3xl w-24 bg-gray-400 py-1.5 px-4 text-black m-2 self-end hover:bg-ciane-500 transition duration-500 hover:text-white focus:outline-none focus:text-white focus:bg-ciane-500">
         Editar
       </Popover.Button>
       <Popover.Panel>
-        <EditingSection
+        <UpdatingSection
           data={props.data}
           date={props.date}
           user={props.user}

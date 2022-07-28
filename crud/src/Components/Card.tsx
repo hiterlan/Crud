@@ -1,10 +1,11 @@
 import { DeleteButton } from "./Buttons/DeleteButton";
-import { EditButton } from "./Buttons/EditButton";
+import { UpdateButton } from "./Buttons/UpdateButton";
 import { ListButton } from "./Buttons/ListButton";
+import AuthContext from "./Providers/Auth";
+import React from "react";
 
 interface CardProps {
   id: number;
-  buttonType: "edit" | "delete" | "list";
   user: string;
   date: Date;
   data: string;
@@ -12,6 +13,7 @@ interface CardProps {
 }
 
 export function Card(props: CardProps) {
+  const { pageType } = React.useContext(AuthContext);
   const dateToCard = new Date(props.date);
   const dateToRender = dateToCard.toLocaleString();
 
@@ -39,9 +41,9 @@ export function Card(props: CardProps) {
             ? props.data
             : props.data.substring(0, 100) + "[...]"}
         </p>
-        {props.buttonType === "delete" && <DeleteButton id={props.id} />}
-        {props.buttonType === "edit" && (
-          <EditButton
+        {pageType === "DELETE" && <DeleteButton id={props.id} />}
+        {pageType === "UPDATE" && (
+          <UpdateButton
             data={props.data}
             date={props.date}
             user={props.user}
@@ -49,7 +51,7 @@ export function Card(props: CardProps) {
             password={props.password}
           />
         )}
-        {props.buttonType === "list" && (
+        {pageType === "LIST" && (
           <ListButton data={props.data} user={props.user} date={props.date} />
         )}
       </div>

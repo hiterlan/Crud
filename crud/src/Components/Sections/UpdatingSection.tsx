@@ -3,7 +3,8 @@ import React from "react";
 import { useState } from "react";
 import AuthContext from "../Providers/Auth";
 import { Popover } from "@headlessui/react";
-interface EditingSectionProps {
+
+interface UpdatingSectionProps {
   id: number;
   user: string;
   date: Date;
@@ -11,8 +12,8 @@ interface EditingSectionProps {
   data: string;
 }
 
-export function EditingSection(props: EditingSectionProps) {
-  // Tornar a editingSection correspondente ao bd
+export function UpdatingSection(props: UpdatingSectionProps) {
+  // Tornar a UpdatingSection correspondente ao bd
   const dateToCard = new Date(props.date);
   const dateToRender = dateToCard.toLocaleString();
   let dateSaved = false;

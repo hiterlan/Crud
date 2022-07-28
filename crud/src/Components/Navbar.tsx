@@ -1,12 +1,8 @@
-import { useEffect, useState } from "react";
-import { EditSection } from "./Sections/EditSection";
 import { MainContent } from "./MainContent";
 import { Registry } from "./Registry";
-import { DeleteSection } from "./Sections/DeleteSection";
-import { ListSection } from "./Sections/ListSection";
-import Axios from "axios";
 import AuthContext from "./Providers/Auth";
 import React from "react";
+import { Section } from "./Sections/Section";
 
 export function Navbar() {
   const { pageType, setPageType } = React.useContext(AuthContext);
@@ -42,9 +38,9 @@ export function Navbar() {
 
       {!pageType && <MainContent />}
       {pageType === "REGISTER" && <Registry />}
-      {pageType === "LIST" && <ListSection />}
-      {pageType === "UPDATE" && <EditSection />}
-      {pageType === "DELETE" && <DeleteSection />}
+      {pageType === "LIST" && <Section />}
+      {pageType === "UPDATE" && <Section />}
+      {pageType === "DELETE" && <Section />}
     </>
   );
 }
