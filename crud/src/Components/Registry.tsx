@@ -1,5 +1,6 @@
 import Axios from "axios";
 import { FormEvent, useState } from "react";
+import { dateAnalysis } from "../Helpers/DateAnalysis";
 
 export function Registry() {
   const [includeDate, setIncludeDate] = useState(false);
@@ -12,36 +13,18 @@ export function Registry() {
   const submitData = (event: FormEvent) => {
     event.preventDefault();
     const date = new Date();
-    let dateconverted;
-    if (!includeDate) {
-      dateconverted = "0000-00-00 00:00:00";
-    } else {
-      dateconverted =
-        date.getFullYear() +
-        "-" +
-        ("00" + (date.getMonth() + 1)).slice(-2) +
-        "-" +
-        ("00" + date.getDate()).slice(-2) +
-        " " +
-        ("00" + date.getHours()).slice(-2) +
-        ":" +
-        ("00" + date.getMinutes()).slice(-2);
-    }
+    const data_time = includeDate ? dateAnalysis(date) : "0000-00-00 00:00:00";
+    const data_user = includeUser ? user : "";
+    const data_password = includePassword ? password : "";
 
-    if (!includeUser) setUser("");
-
-    if (!includePassword) setPassword("");
-
-    if (data != "") {
-      Axios.post("http://localhost:3001/api/insert", {
-        data_content: data,
-        data_time: dateconverted,
-        data_user: user,
-        data_password: password,
-      }).then(() => {
-        alert("Enviado com Sucesso");
-      });
-    }
+    Axios.post("http://localhost:3001/api/insert", {
+      data_content: data,
+      data_time,
+      data_user,
+      data_password,
+    }).then(() => {
+      alert("Enviado com Sucesso");
+    });
   };
   return (
     <form>
@@ -50,7 +33,7 @@ export function Registry() {
           <label>O que deseja registrar?</label>
           <textarea
             onChange={(e) => setData(e.target.value)}
-            className="w-4/5 mt-4 p-4 h-40 rounded-3xl resize-none focus:outline-none"
+            className="w-4/5 mt-4 py-4 p-2 h-40 rounded-3xl resize-none focus:outline-none overflow-y-hidden"
           />
         </div>
         <div className="flex flex-col w-1/2 m-4 p-4">
@@ -93,8 +76,9 @@ export function Registry() {
             />
           </label>
           <button
+            disabled={!data}
             onClick={submitData}
-            className="p-2 bg-gray-400 justify-end text-center w-20 content-end rounded-3xl m-4 ml-auto hover:bg-ciane-500 transition duration-500 hover:text-white focus:outline-none focus:bg-ciane-500 focus:text-white "
+            className="p-2 bg-gray-400 justify-end text-center w-20 content-end rounded-3xl m-4 ml-auto hover:bg-ciane-500 transition duration-500 hover:text-white focus:outline-none focus:bg-ciane-500 focus:text-white disabled:hover:bg-gray-400 disabled:opacity-70 disabled:hover:text-black"
           >
             Salvar
           </button>
